@@ -2,16 +2,16 @@ sms:
   message: apple
   enabled: true
 
-#Prometheus springboot监控配置
+#springboot actuator监控配置
 management:
   endpoints:
     web:
       exposure:
-        include: '*'
+        include: '*'  #通过actuator暴露所有的端点
   metrics:
     tags:
       application: ${spring.application.name} # 暴露的数据中添加application label
   prometheus:
     metrics:
       export:
-        enabled: true
+        enabled: true   #将监控的数据推送给prometheus
