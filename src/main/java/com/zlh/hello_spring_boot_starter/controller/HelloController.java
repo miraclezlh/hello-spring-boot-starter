@@ -19,12 +19,20 @@ import java.util.concurrent.TimeUnit;
 @RestController
 public class HelloController {
     /**
-     * 限流策略 ： 1秒钟2个请求
+     * 限流策略 ： 1秒放2个许可证
+     * 平滑爆发模式
      */
-    private final RateLimiter limiter = RateLimiter.create(2.0);
+    private final RateLimiter smoothBursty = RateLimiter.create(5.0);
 
+    /**
+     * 平滑预热模式
+     */
+    private final RateLimiter smoothWarmup = RateLimiter.create(10.0,1,TimeUnit.SECONDS);
+
+    /**
+     * 时间
+     */
     private final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-
 
     @Autowired
     private HelloService helloService;
@@ -35,7 +43,7 @@ public class HelloController {
         helloService.send("starter come in!");
 
         //500毫秒内，没拿到令牌，就直接进入服务降级
-        boolean tryAcquire = limiter.tryAcquire(500, TimeUnit.MILLISECONDS);
+        boolean tryAcquire = smoothBursty.tryAcquire(500, TimeUnit.MILLISECONDS);
         if (!tryAcquire) {
             System.out.println("进入服务降级，时间{}"+LocalDateTime.now().format(dtf));
             System.out.println("当前排队人数较多，请稍后再试！");
