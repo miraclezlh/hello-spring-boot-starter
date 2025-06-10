@@ -6,9 +6,13 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+/**
+ * 线程池测试接口，工具类
+ * @author 70635
+ */
 @SpringBootTest
 public class ThreadPoolCallTest {
-    private OkHttpClient client = new OkHttpClient();
+    private static final OkHttpClient client = new OkHttpClient();
 
     @Autowired
     private HelloController helloController;
@@ -16,12 +20,7 @@ public class ThreadPoolCallTest {
     @Test
     void testOne() {
         for(int i=0;i<10;i++) {
-            ThreadPoolUtils.getThreadPoolConst().submit(new Runnable() {
-                @Override
-                public void run() {
-                    helloController.home();
-                }
-            });
+            ThreadPoolUtils.getThreadPoolConst().submit(() -> helloController.home());
         }
 //        Request request = new Request.Builder()
 //                .url("http://127.0.0.1:8088/hello/demo")

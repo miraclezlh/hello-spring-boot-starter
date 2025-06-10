@@ -42,15 +42,13 @@ public class HelloController {
     public void  home() {
         helloService.send("starter come in!");
 
-        //500毫秒内，没拿到令牌，就直接进入服务降级
-        boolean tryAcquire = smoothBursty.tryAcquire(500, TimeUnit.MILLISECONDS);
+        //获取一个令牌，500毫秒内，如果没拿到令牌，就直接进入服务降级
+        boolean tryAcquire = smoothBursty.tryAcquire(1,500, TimeUnit.MILLISECONDS);
         if (!tryAcquire) {
-            System.out.println("进入服务降级，时间{}"+LocalDateTime.now().format(dtf));
-            System.out.println("当前排队人数较多，请稍后再试！");
+            System.out.println("进入服务降级，当前排队人数较多，请稍后再试！时间{}"+LocalDateTime.now().format(dtf));
             return;
         }
 
-        System.out.println("获取令牌成功，时间{}"+LocalDateTime.now().format(dtf));
-        System.out.println("请求成功");
+        System.out.println("获取令牌成功，请求成功!时间{}"+LocalDateTime.now().format(dtf));
     }
 }
