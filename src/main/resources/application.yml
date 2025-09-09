@@ -1,5 +1,5 @@
 sms:
-  message: apple
+#  message: apple
   enabled: true
 
 #springboot actuator监控配置
