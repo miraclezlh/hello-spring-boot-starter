@@ -22,5 +22,5 @@ public class GetPropertiesOne {
      * 是否开启
      */
     @Value("${sms.enabled}")
-    private boolean enabled;
+    private Boolean enabled;
 }

@@ -5,7 +5,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * 属性类
- * 自定义配置绑定，方式?(@ConfigurationProperties+@ConfigurationPropertiesScan)
+ * 自定义配置绑定，方式三(@ConfigurationProperties+@EnableConfigurationProperties)
  *
  * @author 70635
  */
@@ -19,5 +19,5 @@ public class GetPropertiesThree {
     /**
      * 是否开启
      */
-    private boolean enabled;
+    private Boolean enabled;
 }

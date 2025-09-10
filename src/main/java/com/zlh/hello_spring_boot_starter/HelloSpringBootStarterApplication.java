@@ -1,8 +1,9 @@
 package com.zlh.hello_spring_boot_starter;
 
+import com.zlh.hello_spring_boot_starter.property.GetPropertiesFour;
 import com.zlh.hello_spring_boot_starter.property.GetPropertiesOne;
-import com.zlh.hello_spring_boot_starter.property.GetPropertiesThree;
 import com.zlh.hello_spring_boot_starter.property.GetPropertiesTwo;
+import com.zlh.hello_spring_boot_starter.service.GetPropertyService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
@@ -28,12 +29,15 @@ public class HelloSpringBootStarterApplication {
         GetPropertiesOne getPropertiesOne = applicationContext.getBean(GetPropertiesOne.class);
         //方式一.@Component+@ConfigurationProperties
         GetPropertiesTwo getPropertiesTwo = applicationContext.getBean(GetPropertiesTwo.class);
-        //方式三.@Component+@ConfigurationProperties
-        GetPropertiesThree getPropertiesThree = applicationContext.getBean(GetPropertiesThree.class);
+        //方式三.@ConfigurationProperties+@EnableConfigurationProperties
+        GetPropertyService getPropertiesThree = applicationContext.getBean(GetPropertyService.class);
+        //方式四.@ConfigurationProperties+@ConfigurationPropertiesScan
+        GetPropertiesFour getPropertiesFour = applicationContext.getBean(GetPropertiesFour.class);
 
         System.out.println(getPropertiesOne.getMessage());
         System.out.println(getPropertiesTwo.getMessage());
-        System.out.println(getPropertiesThree.getMessage());
+        getPropertiesThree.test();
+        System.out.println(getPropertiesFour.getEnabled());
 
         //方式四.从Environment获取
         Environment environment = applicationContext.getEnvironment();
